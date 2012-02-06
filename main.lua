@@ -10,14 +10,15 @@ physics.start()
 local lime = require("lime")
 
 -- Load your map
-local map = lime.loadMap("level1a.tmx")
+local map = lime.loadMap("assets\\maps\\level1a.tmx")
 -- Add physics objects created in PhysicsEditor
-local physicsData = (require "phisics").physicsData()
+local physicsData = (require "assets\\physics\\physics").physicsData()
 
+local layer_hightlight = map:getTileLayer("hightlight")
 local onObject = function(object)
 	local layer = map:getTileLayer("windows")
 	if object.type == "Player" then
-		local player = display.newImage(layer.group, "cat.png")
+		local player = display.newImage(layer.group, "assets\\images\\cat.png")
 		player.x = object.x - 16
 		player.y = object.y
 		physics.addBody(player, { density = 1.0, friction = 0.3, bounce = 0.2, radius = 7 } )
@@ -39,7 +40,7 @@ map:addObjectListener("tube", onObject)
 
 function init_tube(object, layer)
 	local tube_type = "tube_" .. object.tube_type
-	local imagePath = tube_type .. "_p.png" 
+	local imagePath = "assets\\images\\" .. tube_type .. "_p.png" 
 	
 	local tube = display.newImage(layer.group, imagePath)
 	tube.x = object.x
@@ -47,24 +48,28 @@ function init_tube(object, layer)
 	tube.countLeft = 10
 	
 	tube.scoreText = display.newText(tube.countLeft, tube.x-8, tube.y-8, native.systemFont, 12)
-	tube.scoreText:setTextColor(0, 255, 0)
+	tube.scoreText:setTextColor(255, 255, 255)
 	tube.isBodyActive = false
 
 	function tube:touch(event)
-		if self.countLeft > 0 then
+		local parent = self
+		if parent.countLeft > 0 then
 			local tube_child = display.newImage(layer.group, imagePath)	
 			tube_child.x = object.x
 			tube_child.y = object.y
-			self.countLeft = self.countLeft - 1		
-			self.scoreText.text = self.countLeft
+			tube_child.parent = parent
+			parent.countLeft = parent.countLeft - 1		
+			parent.scoreText.text = parent.countLeft
 
 			physics.addBody(tube_child, "static", physicsData:get(tube_type .. "_p"))
 
 			function tube_child:touch(event)
+				
 				if event.phase == "began" then
 					self.markX = self.x    -- store x location of object
 					self.markY = self.y    -- store y location of object
-					self.isBodyActive = false
+					self.isBodyActive = false					
+					layer_hightlight:show()
 				elseif event.phase == "moved" and self.isBodyActive == false then
 					local x = (event.x - event.xStart) + self.markX
 					local y = (event.y - event.yStart) + self.markY			
@@ -74,6 +79,14 @@ function init_tube(object, layer)
 					local y = (event.y - event.yStart) + self.markY			
 					self.x, self.y = x + 16 - x%32, y + 16 - y%32    -- move object based on calculations above			
 					self.isBodyActive = true
+					local position = { column = (self.x + 16) / 32, row = (self.y + 16) / 32}
+					local tile = layer_hightlight:getTileAt( position )
+					if (self.x == parent.x and self.y == parent.y) or tile == nil  then
+						parent.countLeft = parent.countLeft + 1		
+						parent.scoreText.text = parent.countLeft
+						self:removeSelf()
+					end					
+					layer_hightlight:hide()
 				end
 				return true
 			end
@@ -92,13 +105,13 @@ local physical = lime.buildPhysical(map)
 physics.pause()
 --physics.setDrawMode("hybrid")
 
+layer_hightlight:hide()
 local onButtonAPress = function(event)
 	physics.start()
 end
-
 local buttonA = ui.newButton{
-        default = "buttonA.png",
-        over = "buttonA_over.png",
+        default = "assets\\images\\buttonA.png",
+        over = "assets\\images\\buttonA_over.png",
         onPress = onButtonAPress
 }
 buttonA.x = display.contentWidth - buttonA.width / 2 - 10
