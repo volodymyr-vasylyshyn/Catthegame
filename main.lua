@@ -1,28 +1,23 @@
-display.setStatusBar( display.HiddenStatusBar )
-
--- Create a background colour just to make the map look a little nicer
-local back = display.newRect(0, 0, display.contentWidth, display.contentHeight)
-back:setFillColor(165, 210, 255)
-
+-- requires
 require("physics")
+
 physics.start()
--- Load Lime
+-- local variables
 local lime = require("lime")
-
--- Load your map
 local map = lime.loadMap("assets\\maps\\level1a.tmx")
--- Add physics objects created in PhysicsEditor
-local physicsData = (require "assets\\physics\\physics").physicsData()
-
+local physicsData = (require "assets\\physics\\physics").physicsData() -- Add physics objects created in PhysicsEditor
 local layer_hightlight = map:getTileLayer("hightlight")
+local player = nil
+
+display.newRect(0, 0, display.contentWidth, display.contentHeight):setFillColor(165, 210, 255)  -- Create a background colour just to make the map look a little nicer
+
 local onObject = function(object)
 	local layer = map:getTileLayer("windows")
 	if object.type == "Player" then
-		local player = display.newImage(layer.group, "assets\\images\\cat.png")
-		player.x = object.x - 16
-		player.y = object.y
+		player = display.newImage(layer.group, "assets\\images\\cat.png")
+		player.x, player.y  = object.x - 16, object.y
+		player.start_x, player.start_y  = object.x - 16, object.y
 		physics.addBody(player, { density = 1.0, friction = 0.3, bounce = 0.2, radius = 7 } )
-		--player.isFixedRotation = true	
 		player.bodyType = "static"
 		function player:touch(event)
 			player.bodyType = "dynamic"			
@@ -43,26 +38,22 @@ function init_tube(object, layer)
 	local imagePath = "assets\\images\\" .. tube_type .. "_p.png" 
 	
 	local tube = display.newImage(layer.group, imagePath)
-	tube.x = object.x
-	tube.y = object.y
-	tube.countLeft = 10
-	
+	tube.x, tube.y = object.x, object.y
+	tube.countLeft = 10	
 	tube.scoreText = display.newText(tube.countLeft, tube.x-8, tube.y-8, native.systemFont, 12)
 	tube.scoreText:setTextColor(255, 255, 255)
 	tube.isBodyActive = false
-
+	tube.type = object.tube_type
 	function tube:touch(event)
 		local parent = self
 		if parent.countLeft > 0 then
 			local tube_child = display.newImage(layer.group, imagePath)	
-			tube_child.x = object.x
-			tube_child.y = object.y
+			tube_child.type = "tube"
+			tube_child.x, tube_child.y = object.x, object.y
 			tube_child.parent = parent
 			parent.countLeft = parent.countLeft - 1		
 			parent.scoreText.text = parent.countLeft
-
 			physics.addBody(tube_child, "static", physicsData:get(tube_type .. "_p"))
-
 			function tube_child:touch(event)
 				
 				if event.phase == "began" then
@@ -97,17 +88,15 @@ function init_tube(object, layer)
 	tube:addEventListener("touch", tube)
 end
 
--- Create the visual
-local visual = lime.createVisual(map)
-
--- Build the physical
-local physical = lime.buildPhysical(map)
-physics.pause()
+local visual = lime.createVisual(map)  -- Create the visual
+local physical = lime.buildPhysical(map)  -- Build the physical
 --physics.setDrawMode("hybrid")
 
-layer_hightlight:hide()
+layer_hightlight:hide() -- hide hightlight layer
+-- add A button
 local onButtonAPress = function(event)
-	physics.start()
+	player.x, player.y  = player.start_x, player.start_y 
+	player.bodyType = "static"
 end
 local buttonA = ui.newButton{
         default = "assets\\images\\buttonA.png",
@@ -117,3 +106,35 @@ local buttonA = ui.newButton{
 buttonA.x = display.contentWidth - buttonA.width / 2 - 10
 buttonA.y = display.contentHeight - buttonA.height / 2 - 10
 buttonA.alpha = 1.0
+
+
+local function onCollision(self, event )
+
+ 	if ( event.phase == "began" ) then
+		print(event.other.type)
+		--player = display.newImage(layer.group, "assets\\images\\cat.png")
+		print(player.path)
+		if event.other.type == "tube" then
+			player = display.newImage(layer.group, "assets\\images\\cat_in_tube.png")
+		elseif event.other.IsPickup then
+			
+			local item = event.other
+			
+			local onTransitionEnd = function(transitionEvent)
+				if transitionEvent["removeSelf"] then
+					transitionEvent:removeSelf()
+				end
+			end
+					
+			-- Fade out the item
+			transition.to(item, {time = 500, alpha = 0, onComplete=onTransitionEnd})
+		end
+	elseif ( event.phase == "ended" ) then
+		if event.other.type == "tube"  then
+			player = display.newImage(layer.group, "assets\\images\\cat.png")
+		end
+	end
+end
+
+player.collision = onCollision
+player:addEventListener( "collision", player )
