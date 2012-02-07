@@ -8,6 +8,7 @@ local map = lime.loadMap("assets\\maps\\level1a.tmx")
 local physicsData = (require "assets\\physics\\physics").physicsData() -- Add physics objects created in PhysicsEditor
 local layer_hightlight = map:getTileLayer("hightlight")
 local player = nil
+local draged_object = nil
 
 display.newRect(0, 0, display.contentWidth, display.contentHeight):setFillColor(165, 210, 255)  -- Create a background colour just to make the map look a little nicer
 
@@ -55,17 +56,17 @@ function init_tube(object, layer)
 			parent.scoreText.text = parent.countLeft
 			physics.addBody(tube_child, "static", physicsData:get(tube_type .. "_p"))
 			function tube_child:touch(event)
-				
 				if event.phase == "began" then
 					self.markX = self.x    -- store x location of object
 					self.markY = self.y    -- store y location of object
 					self.isBodyActive = false					
 					layer_hightlight:show()
-				elseif event.phase == "moved" and self.isBodyActive == false then
+					draged_object = self
+				elseif event.phase == "moved" then
 					local x = (event.x - event.xStart) + self.markX
 					local y = (event.y - event.yStart) + self.markY			
 					self.x, self.y = x, y    -- move object based on calculations above
-				elseif event.phase == "ended" and self.isBodyActive == false then
+				elseif event.phase == "ended" then
 					local x = (event.x - event.xStart) + self.markX
 					local y = (event.y - event.yStart) + self.markY			
 					self.x, self.y = x + 16 - x%32, y + 16 - y%32    -- move object based on calculations above			
@@ -76,8 +77,11 @@ function init_tube(object, layer)
 						parent.countLeft = parent.countLeft + 1		
 						parent.scoreText.text = parent.countLeft
 						self:removeSelf()
-					end					
+					end			
+					draged_object = nil					
 					layer_hightlight:hide()
+				elseif event.phase == "cancelled" then
+					print("cancelled")
 				end
 				return true
 			end
@@ -106,6 +110,15 @@ local buttonA = ui.newButton{
 buttonA.x = display.contentWidth - buttonA.width / 2 - 10
 buttonA.y = display.contentHeight - buttonA.height / 2 - 10
 buttonA.alpha = 1.0
+
+local myListener = function( event ) 
+	if event.phase == "moved" and draged_object ~= nil then
+	  local x = (event.x - event.xStart) + draged_object.markX
+	  local y = (event.y - event.yStart) + draged_object.markY			
+	  draged_object.x, draged_object.y = x, y    -- move object based on calculations above
+	end
+end 
+Runtime:addEventListener( "touch", myListener )
 
 
 local function onCollision(self, event )
