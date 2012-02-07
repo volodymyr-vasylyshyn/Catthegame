@@ -345,6 +345,11 @@
  </objectgroup>
  <objectgroup name="player" width="15" height="10">
   <object type="Player" x="32" y="64"/>
+  <object type="mouse" x="368" y="288">
+   <properties>
+    <property name="hasBody" value=""/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="start objects" width="15" height="10">
   <object x="32" y="64"/>

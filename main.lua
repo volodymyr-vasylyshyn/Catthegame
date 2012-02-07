@@ -26,6 +26,20 @@ local onObject = function(object)
 		end		
 		player:addEventListener("touch", player)		
 	end
+	if object.type == "mouse" then
+		local mouse = display.newImage(layer.group, "assets\\images\\mouse.png")
+		mouse.x, mouse.y  = object.x, object.y
+		mouse.start_x, mouse.start_y  = object.x - 16, object.y
+		physics.addBody(mouse, { radius = 9 } )
+		--player.bodyType = "static"
+
+		mouse.HasBody = true
+		mouse.IsPickup = true
+		mouse.bodyType = "static"
+		mouse.isSensor = true
+		mouse.pickupType = "mouse"
+		mouse.scoreValue = 50	
+	end	
 	if object.type == "tube" then
 		init_tube(object, layer)
 	end
@@ -33,6 +47,7 @@ end
 
 map:addObjectListener("Player", onObject)
 map:addObjectListener("tube", onObject)
+map:addObjectListener("mouse", onObject)
 
 function init_tube(object, layer)
 	local tube_type = "tube_" .. object.tube_type
@@ -121,17 +136,10 @@ local globalTouchListener = function( event )
 end 
 Runtime:addEventListener( "touch", globalTouchListener )
 
-
+-- here will be 
 local function onCollision(self, event )
-
  	if ( event.phase == "began" ) then
-		print(event.other.type)
-		--player = display.newImage(layer.group, "assets\\images\\cat.png")
-		print(player.path)
-		if event.other.type == "tube" then
-			player = display.newImage(layer.group, "assets\\images\\cat_in_tube.png")
-		elseif event.other.IsPickup then
-			
+		if event.other.IsPickup then
 			local item = event.other
 			
 			local onTransitionEnd = function(transitionEvent)
@@ -142,10 +150,21 @@ local function onCollision(self, event )
 					
 			-- Fade out the item
 			transition.to(item, {time = 500, alpha = 0, onComplete=onTransitionEnd})
-		end
-	elseif ( event.phase == "ended" ) then
-		if event.other.type == "tube"  then
-			player = display.newImage(layer.group, "assets\\images\\cat.png")
+			
+			local text = nil
+			
+			if item.pickupType == "mouse" then				
+				--text = display.newText( item.scoreValue .. " Points!", 0, 0, "Helvetica", 50 )		
+				text = display.newText("Mouse is dead!", 0, 0, "Helvetica", 50 )		
+			end
+			
+			if text then
+				text:setTextColor(0, 0, 0, 255)
+				text.x = display.contentCenterX
+				text.y = text.height / 2
+				
+				transition.to(text, {time = 1000, alpha = 0, onComplete=onTransitionEnd})
+			end
 		end
 	end
 end
