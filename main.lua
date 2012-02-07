@@ -46,47 +46,48 @@ function init_tube(object, layer)
 	tube.isBodyActive = false
 	tube.type = object.tube_type
 	function tube:touch(event)
-		local parent = self
-		if parent.countLeft > 0 then
-			local tube_child = display.newImage(layer.group, imagePath)	
-			tube_child.type = "tube"
-			tube_child.x, tube_child.y = object.x, object.y
-			tube_child.parent = parent
-			parent.countLeft = parent.countLeft - 1		
-			parent.scoreText.text = parent.countLeft
-			physics.addBody(tube_child, "static", physicsData:get(tube_type .. "_p"))
-			function tube_child:touch(event)
-				if event.phase == "began" then
-					self.markX = self.x    -- store x location of object
-					self.markY = self.y    -- store y location of object
-					self.isBodyActive = false					
-					layer_hightlight:show()
-					draged_object = self
-				elseif event.phase == "moved" then
-					local x = (event.x - event.xStart) + self.markX
-					local y = (event.y - event.yStart) + self.markY			
-					self.x, self.y = x, y    -- move object based on calculations above
-				elseif event.phase == "ended" then
-					local x = (event.x - event.xStart) + self.markX
-					local y = (event.y - event.yStart) + self.markY			
-					self.x, self.y = x + 16 - x%32, y + 16 - y%32    -- move object based on calculations above			
-					self.isBodyActive = true
-					local position = { column = (self.x + 16) / 32, row = (self.y + 16) / 32}
-					local tile = layer_hightlight:getTileAt( position )
-					if (self.x == parent.x and self.y == parent.y) or tile == nil  then
-						parent.countLeft = parent.countLeft + 1		
-						parent.scoreText.text = parent.countLeft
-						self:removeSelf()
-					end			
-					draged_object = nil					
-					layer_hightlight:hide()
-				elseif event.phase == "cancelled" then
-					print("cancelled")
+		if draged_object == nil then
+			local parent = self
+			if parent.countLeft > 0 then
+				local tube_child = display.newImage(layer.group, imagePath)	
+				tube_child.type = "tube"
+				tube_child.x, tube_child.y = object.x, object.y
+				tube_child.parent = parent
+				parent.countLeft = parent.countLeft - 1		
+				parent.scoreText.text = parent.countLeft
+				physics.addBody(tube_child, "static", physicsData:get(tube_type .. "_p"))
+				function tube_child:touch(event)
+					if event.phase == "began" and draged_object == nil then
+						self.markX = self.x    -- store x location of object
+						self.markY = self.y    -- store y location of object
+						self.isBodyActive = false					
+						layer_hightlight:show()
+						draged_object = self					
+						event.target:toFront()
+					elseif event.phase == "moved" and draged_object == self then
+						local x = (event.x - event.xStart) + self.markX
+						local y = (event.y - event.yStart) + self.markY			
+						self.x, self.y = x, y    -- move object based on calculations above
+					elseif event.phase == "ended" then
+						local x = (event.x - event.xStart) + self.markX
+						local y = (event.y - event.yStart) + self.markY			
+						self.x, self.y = x + 16 - x%32, y + 16 - y%32    -- move object based on calculations above			
+						self.isBodyActive = true
+						local position = { column = (self.x + 16) / 32, row = (self.y + 16) / 32}
+						local tile = layer_hightlight:getTileAt( position )
+						if (self.x == parent.x and self.y == parent.y) or tile == nil  then
+							parent.countLeft = parent.countLeft + 1		
+							parent.scoreText.text = parent.countLeft
+							self:removeSelf()
+						end			
+						draged_object = nil					
+						layer_hightlight:hide()
+					end
+					return true
 				end
-				return true
+				tube_child:addEventListener("touch", tube_child)
+				tube_child:touch(event)
 			end
-			tube_child:addEventListener("touch", tube_child)
-			tube_child:touch(event)
 		end
 	end
 	tube:addEventListener("touch", tube)
@@ -111,14 +112,14 @@ buttonA.x = display.contentWidth - buttonA.width / 2 - 10
 buttonA.y = display.contentHeight - buttonA.height / 2 - 10
 buttonA.alpha = 1.0
 
-local myListener = function( event ) 
+local globalTouchListener = function( event ) 
 	if event.phase == "moved" and draged_object ~= nil then
 	  local x = (event.x - event.xStart) + draged_object.markX
 	  local y = (event.y - event.yStart) + draged_object.markY			
 	  draged_object.x, draged_object.y = x, y    -- move object based on calculations above
 	end
 end 
-Runtime:addEventListener( "touch", myListener )
+Runtime:addEventListener( "touch", globalTouchListener )
 
 
 local function onCollision(self, event )
