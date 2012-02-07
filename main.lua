@@ -18,7 +18,7 @@ local onObject = function(object)
 		player = display.newImage(layer.group, "assets\\images\\cat.png")
 		player.x, player.y  = object.x - 16, object.y
 		player.start_x, player.start_y  = object.x - 16, object.y
-		physics.addBody(player, { density = 1.0, friction = 0.3, bounce = 0.2, radius = 7 } )
+		physics.addBody(player, { density = 1.0, friction = 1000.0, bounce = 0.0, radius = 7 } )
 		player.bodyType = "static"
 		function player:touch(event)
 			player.bodyType = "dynamic"			
@@ -29,7 +29,6 @@ local onObject = function(object)
 	if object.type == "mouse" then
 		local mouse = display.newImage(layer.group, "assets\\images\\mouse.png")
 		mouse.x, mouse.y  = object.x, object.y
-		mouse.start_x, mouse.start_y  = object.x - 16, object.y
 		physics.addBody(mouse, { radius = 9 } )
 		--player.bodyType = "static"
 
@@ -163,7 +162,7 @@ local function onCollision(self, event )
 				text.x = display.contentCenterX
 				text.y = text.height / 2
 				
-				transition.to(text, {time = 1000, alpha = 0, onComplete=onTransitionEnd})
+				transition.to(text, {time = 2000, alpha = 0, onComplete=onTransitionEnd})
 			end
 		end
 	end
