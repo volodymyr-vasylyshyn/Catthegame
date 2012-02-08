@@ -86,13 +86,12 @@ function init_mouse(object, layer)
 end
 function init_tube(object, layer)
 	local tube_type = "tube_" .. object.tube_type
-	local imagePath = "assets\\images\\" .. tube_type .. "_p.png" 
-	
+	local imagePath = "assets\\images\\" .. tube_type .. "_p.png" 	
 	local tube = display.newImage(layer.group, imagePath)
 	tube.x, tube.y = object.x, object.y
 	tube.countLeft = 10	
-	tube.scoreText = display.newText(tube.countLeft, tube.x-8, tube.y-8, native.systemFont, 12)
-	tube.scoreText:setTextColor(255, 255, 255)
+	tube.countText = display.newText(tube.countLeft, tube.x-8, tube.y-8, native.systemFont, 12)
+	tube.countText:setTextColor(255, 255, 255)
 	tube.isBodyActive = false
 	tube.type = object.tube_type
 	function tube:touch(event)
@@ -104,7 +103,7 @@ function init_tube(object, layer)
 				tube_child.x, tube_child.y = object.x, object.y
 				tube_child.parent = parent
 				parent.countLeft = parent.countLeft - 1		
-				parent.scoreText.text = parent.countLeft
+				parent.countText.text = parent.countLeft
 				physics.addBody(tube_child, "static", physicsData:get(tube_type .. "_p"))
 				function tube_child:touch(event)
 					if event.phase == "began" and draged_object == nil then
@@ -132,7 +131,7 @@ function init_tube(object, layer)
 						local tile = layer_hightlight:getTileAt( position )
 						if (self.x == parent.x and self.y == parent.y) or tile == nil or tile.isBusy == true  then
 							parent.countLeft = parent.countLeft + 1		
-							parent.scoreText.text = parent.countLeft
+							parent.countText.text = parent.countLeft
 							self:removeSelf()
 						end			
 						if tile ~= nil then
