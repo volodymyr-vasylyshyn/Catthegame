@@ -78,6 +78,11 @@ function init_tube(object, layer)
 						layer_hightlight:show()
 						draged_object = self					
 						event.target:toFront()
+						local position = { column = (self.x + 16) / 32, row = (self.y + 16) / 32}
+						local tile = layer_hightlight:getTileAt( position )		
+						if tile ~= nil then
+							tile.isBusy = false
+						end						
 					elseif event.phase == "moved" and draged_object == self then
 						local x = (event.x - event.xStart) + self.markX
 						local y = (event.y - event.yStart) + self.markY			
@@ -89,11 +94,14 @@ function init_tube(object, layer)
 						self.isBodyActive = true
 						local position = { column = (self.x + 16) / 32, row = (self.y + 16) / 32}
 						local tile = layer_hightlight:getTileAt( position )
-						if (self.x == parent.x and self.y == parent.y) or tile == nil  then
+						if (self.x == parent.x and self.y == parent.y) or tile == nil or tile.isBusy == true  then
 							parent.countLeft = parent.countLeft + 1		
 							parent.scoreText.text = parent.countLeft
 							self:removeSelf()
 						end			
+						if tile ~= nil then
+							tile.isBusy = true
+						end
 						draged_object = nil					
 						layer_hightlight:hide()
 					end
