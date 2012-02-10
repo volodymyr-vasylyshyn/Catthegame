@@ -330,16 +330,19 @@
   <object type="Body" x="0" y="310" width="384" height="10">
    <properties>
     <property name="bodyType" value="static"/>
+    <property name="friction" value="100"/>
    </properties>
   </object>
   <object type="Body" x="0" y="0" width="3" height="320">
    <properties>
     <property name="bodyType" value="static"/>
+    <property name="friction" value="100"/>
    </properties>
   </object>
   <object type="Body" x="381" y="0" width="3" height="320">
    <properties>
     <property name="bodyType" value="static"/>
+    <property name="friction" value="100"/>
    </properties>
   </object>
  </objectgroup>
