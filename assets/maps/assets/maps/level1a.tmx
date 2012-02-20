@@ -331,7 +331,6 @@
    <properties>
     <property name="bodyType" value="static"/>
     <property name="friction" value="100"/>
-    <property name="isGround" value=""/>
    </properties>
   </object>
   <object type="Body" x="0" y="0" width="3" height="320">
@@ -357,62 +356,41 @@
  </objectgroup>
  <objectgroup name="start objects" width="15" height="10">
   <object x="32" y="64"/>
-  <object type="MovableItem" x="400" y="16">
+  <object type="tube" x="400" y="16">
    <properties>
-    <property name="itemsCount" value="10"/>
-    <property name="kind" value="vertical"/>
-    <property name="movableType" value="tube"/>
+    <property name="tube_type" value="vertical"/>
+    <property name="isSensor" value="true"/>
    </properties>
   </object>
-  <object type="MovableItem" x="432" y="16">
+  <object type="tube" x="432" y="16">
    <properties>
-    <property name="itemsCount" value="10"/>
-    <property name="kind" value="horizontal"/>
-    <property name="movableType" value="tube"/>
+    <property name="tube_type" value="horizontal"/>
+    <property name="isSensor" value="true"/>
    </properties>
   </object>
-  <object type="MovableItem" x="400" y="80">
+  <object type="tube" x="400" y="80">
    <properties>
-    <property name="itemsCount" value="10"/>
-    <property name="kind" value="r2t"/>
-    <property name="movableType" value="tube"/>
+    <property name="tube_type" value="r2t"/>
    </properties>
   </object>
-  <object type="MovableItem" x="432" y="48">
+  <object type="tube" x="432" y="48">
    <properties>
-    <property name="itemsCount" value="10"/>
-    <property name="kind" value="l2b"/>
-    <property name="movableType" value="tube"/>
+    <property name="tube_type" value="l2b"/>
    </properties>
   </object>
-  <object type="MovableItem" x="400" y="48">
+  <object type="tube" x="400" y="48">
    <properties>
-    <property name="itemsCount" value="10"/>
-    <property name="kind" value="r2b"/>
-    <property name="movableType" value="tube"/>
+    <property name="tube_type" value="r2b"/>
    </properties>
   </object>
-  <object type="MovableItem" x="432" y="80">
+  <object type="tube" x="432" y="80">
    <properties>
-    <property name="itemsCount" value="10"/>
-    <property name="kind" value="l2t"/>
-    <property name="movableType" value="tube"/>
-   </properties>
-  </object>
-  <object type="MovableItem" x="400" y="112">
-   <properties>
-    <property name="itemsCount" value="3"/>
-    <property name="movableType" value="matraz"/>
-   </properties>
-  </object>
-  <object type="MovableItem" x="432" y="112">
-   <properties>
-    <property name="itemsCount" value="5"/>
-    <property name="movableType" value="antenna"/>
+    <property name="items_count" value="10"/>
+    <property name="tube_type" value="l2t"/>
    </properties>
   </object>
  </objectgroup>
- <layer name="hightlight_tube" width="15" height="10" opacity="0.42">
+ <layer name="hightlight" width="15" height="10">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -462,194 +440,38 @@
    <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="1093"/>
    <tile gid="1093"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="1093"/>
    <tile gid="1093"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="1093"/>
-   <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="1093"/>
-   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="1093"/>
    <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-  </data>
- </layer>
- <layer name="hightlight_matraz" width="15" height="10" opacity="0.44">
-  <data>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -660,91 +482,11 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="1093"/>
    <tile gid="1093"/>
    <tile gid="1093"/>
    <tile gid="1093"/>
    <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-  </data>
- </layer>
- <layer name="hightlight_antenna" width="15" height="10" opacity="0.39">
-  <data>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -758,8 +500,8 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="1093"/>
+   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -767,93 +509,21 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="1093"/>
    <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
-   <tile gid="1093"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
